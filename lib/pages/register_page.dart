@@ -19,9 +19,14 @@ class _RegisterPageState extends State<RegisterPage> {
   bool isApiCallProcess = false;
   bool hidePassword = true;
   static final GlobalKey<FormState> globalFormKey = GlobalKey<FormState>();
-  String? userName;
-  String? password;
+  String? firstname;
+  String? lastname;
   String? email;
+  String? idNumber;
+  String? password;
+  String? phone;
+  String? address;
+
 
   @override
   void initState() {
@@ -32,7 +37,7 @@ class _RegisterPageState extends State<RegisterPage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: HexColor("#283B71"),
+        backgroundColor: HexColor("#9b59b6"),
         body: ProgressHUD(
           child: Form(
             key: globalFormKey,
@@ -74,10 +79,18 @@ class _RegisterPageState extends State<RegisterPage> {
               children: <Widget>[
                 Align(
                   alignment: Alignment.center,
-                  child: Image.asset(
-                    "assets/images/ShoppingAppLogo.png",
-                    fit: BoxFit.contain,
-                    width: 250,
+                  // child: Image.asset(
+                  //   "assets/images/ShoppingAppLogo.png",
+                  //   fit: BoxFit.contain,
+                  //   width: 250,
+                  // ),
+                  child: Text(
+                    "Tumira Cash",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 55,
+                      color: Color.fromARGB(255, 18, 15, 180),
+                    ),
                   ),
                 ),
               ],
@@ -99,17 +112,71 @@ class _RegisterPageState extends State<RegisterPage> {
             child: FormHelper.inputFieldWidget(
               context,
               const Icon(Icons.person),
-              "Username",
-              "Username",
+              "Firstname",
+              "Firstname",
               (onValidateVal) {
                 if (onValidateVal.isEmpty) {
-                  return 'Username can\'t be empty.';
+                  return 'Firstname can\'t be empty.';
                 }
 
                 return null;
               },
               (onSavedVal) => {
-                userName = onSavedVal,
+                firstname = onSavedVal,
+              },
+              initialValue: "",
+              obscureText: false,
+              borderFocusColor: Colors.white,
+              prefixIconColor: Colors.white,
+              borderColor: Colors.white,
+              textColor: Colors.white,
+              hintColor: Colors.white.withOpacity(0.7),
+              borderRadius: 10,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 10),
+            child: FormHelper.inputFieldWidget(
+              context,
+              const Icon(Icons.person),
+              "Lastname",
+              "Lastname",
+              (onValidateVal) {
+                if (onValidateVal.isEmpty) {
+                  return 'Lastname can\'t be empty.';
+                }
+
+                return null;
+              },
+              (onSavedVal) => {
+                lastname = onSavedVal,
+              },
+              initialValue: "",
+              obscureText: false,
+              borderFocusColor: Colors.white,
+              prefixIconColor: Colors.white,
+              borderColor: Colors.white,
+              textColor: Colors.white,
+              hintColor: Colors.white.withOpacity(0.7),
+              borderRadius: 10,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 10),
+            child: FormHelper.inputFieldWidget(
+              context,
+              const Icon(Icons.person),
+              "Email",
+              "Email",
+              (onValidateVal) {
+                if (onValidateVal.isEmpty) {
+                  return 'Email can\'t be empty.';
+                }
+
+                return null;
+              },
+              (onSavedVal) => {
+                email = onSavedVal,
               },
               initialValue: "",
               obscureText: false,
@@ -164,17 +231,69 @@ class _RegisterPageState extends State<RegisterPage> {
             child: FormHelper.inputFieldWidget(
               context,
               const Icon(Icons.mail),
-              "Email",
-              "Email",
+              "Phone",
+              "Phone",
               (onValidateVal) {
                 if (onValidateVal.isEmpty) {
-                  return 'Email can\'t be empty.';
+                  return 'Phone can\'t be empty.';
                 }
 
                 return null;
               },
               (onSavedVal) => {
-                email = onSavedVal,
+                phone = onSavedVal,
+              },
+              initialValue: "",
+              borderFocusColor: Colors.white,
+              prefixIconColor: Colors.white,
+              borderColor: Colors.white,
+              textColor: Colors.white,
+              hintColor: Colors.white.withOpacity(0.7),
+              borderRadius: 10,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 10),
+            child: FormHelper.inputFieldWidget(
+              context,
+              const Icon(Icons.mail),
+              "Id Number",
+              "Id Number",
+              (onValidateVal) {
+                if (onValidateVal.isEmpty) {
+                  return 'Id Number can\'t be empty.';
+                }
+
+                return null;
+              },
+              (onSavedVal) => {
+                idNumber = onSavedVal,
+              },
+              initialValue: "",
+              borderFocusColor: Colors.white,
+              prefixIconColor: Colors.white,
+              borderColor: Colors.white,
+              textColor: Colors.white,
+              hintColor: Colors.white.withOpacity(0.7),
+              borderRadius: 10,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 10),
+            child: FormHelper.inputFieldWidget(
+              context,
+              const Icon(Icons.mail),
+              "Address",
+              "Address",
+              (onValidateVal) {
+                if (onValidateVal.isEmpty) {
+                  return 'Address can\'t be empty.';
+                }
+
+                return null;
+              },
+              (onSavedVal) => {
+                address = onSavedVal,
               },
               initialValue: "",
               borderFocusColor: Colors.white,
@@ -197,11 +316,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     isApiCallProcess = true;
                   });
 
-                  RegisterRequestModel model = RegisterRequestModel(
-                    username: userName,
-                    password: password,
-                    email: email,
-                  );
+                  RegisterRequestModel model = RegisterRequestModel(firstname: firstname!, lastname: lastname!, idNumber: idNumber!, email: email!, password: password!, phone: phone!, address: address!);
 
                   APIService.register(model).then(
                     (response) {

@@ -19,7 +19,7 @@ class _LoginPageState extends State<LoginPage> {
   bool isApiCallProcess = false;
   bool hidePassword = true;
   GlobalKey<FormState> globalFormKey = GlobalKey<FormState>();
-  String? userName;
+  String? email;
   String? password;
 
   @override
@@ -31,7 +31,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: HexColor("#283B71"),
+        backgroundColor: HexColor("#9b59b6"),
         body: ProgressHUD(
           child: Form(
             key: globalFormKey,
@@ -88,10 +88,18 @@ class _LoginPageState extends State<LoginPage> {
                 //),
                 Align(
                   alignment: Alignment.center,
-                  child: Image.asset(
-                    "assets/images/ShoppingAppLogo.png",
-                    fit: BoxFit.contain,
-                    width: 250,
+                  // child: Image.asset(
+                  //   "assets/images/ShoppingAppLogo.png",
+                  //   fit: BoxFit.contain,
+                  //   width: 250,
+                  // ),
+                   child: Text(
+                    "Tumira Cash",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 55,
+                      color: Color.fromARGB(255, 18, 15, 180),
+                    ),
                   ),
                 ),
               ],
@@ -113,17 +121,17 @@ class _LoginPageState extends State<LoginPage> {
             child: FormHelper.inputFieldWidget(
               context,
               const Icon(Icons.person),
-              "Username",
-              "Username",
+              "Email",
+              "Email",
               (onValidateVal) {
                 if (onValidateVal.isEmpty) {
-                  return 'Username can\'t be empty.';
+                  return 'Email can\'t be empty.';
                 }
 
                 return null;
               },
               (onSavedVal) => {
-                userName = onSavedVal,
+                email = onSavedVal,
               },
               initialValue: "",
               obscureText: false,
@@ -208,10 +216,7 @@ class _LoginPageState extends State<LoginPage> {
                     isApiCallProcess = true;
                   });
 
-                  LoginRequestModel model = LoginRequestModel(
-                    username: userName,
-                    password: password,
-                  );
+                  LoginRequestModel model = LoginRequestModel(email: email!, password: password!);
 
                   APIService.login(model).then(
                     (response) {
